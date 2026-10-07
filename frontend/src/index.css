@@ -1,0 +1,137 @@
+@import "@fontsource/cinzel/500.css";
+@import "@fontsource/cinzel/700.css";
+@import "@fontsource-variable/figtree";
+@import "tailwindcss";
+@import "./theme/tokens.css";
+@import "./theme/themes/demacia.css";
+
+/* Tailwind utilities that follow the active theme (bg-night, text-gold, font-display, ...) */
+@theme inline {
+  --color-night: var(--night);
+  --color-rampart: var(--rampart);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-steel: var(--steel);
+  --color-steel-dim: var(--steel-dim);
+  --color-frost: var(--frost);
+  --color-blood: var(--blood);
+  --color-amber: var(--amber);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --ease-out: var(--ease-out);
+  --ease-inout: var(--ease-inout);
+}
+
+html,
+body {
+  background: var(--night);
+  color: var(--steel);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+::selection {
+  background: rgb(201 165 92 / 0.35);
+  color: var(--gold-light);
+}
+:focus-visible {
+  outline: 2px solid var(--frost);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+/* Glass panel: tinted, hairline gold border. Add .glass-blur only where the panel sits over art
+   (backdrop blur costs frames while scrolling and does nothing over the plain night background). */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(234 215 166 / 0.06);
+}
+
+/* Shimmer skeleton (transform-only animation) */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(174 184 199 / 0.08);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(234 215 166 / 0.09), transparent);
+  animation: shimmer 1.4s var(--ease-inout) infinite;
+}
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+/* keystone: a soft gold halo that breathes (opacity + scale only) */
+.keystone-glow {
+  background: radial-gradient(closest-side, rgb(234 215 166 / 0.55), rgb(201 165 92 / 0.18) 60%, transparent);
+  animation: keystone-breathe 2.8s ease-in-out infinite;
+}
+@keyframes keystone-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+/* slow amber pulse on "possibly outdated" badges (opacity + scale only) */
+.pulse-ring {
+  animation: pulse-ring 2.4s var(--ease-out) infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.18, 1.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.glass-blur {
+  backdrop-filter: blur(var(--blur-glass)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.2);
+}

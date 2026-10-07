@@ -1,0 +1,154 @@
+# Garen Matchup Knowledge Base — project config.
+# Adding another champion later = change `champion` (and its OTP sources), not code.
+
+champion: Garen
+ui_theme: demacia   # frontend theme file (frontend/src/theme/themes/<name>.css); derives from the main champion
+# Build/rune (volatile) claims sourced before the newest of these patches are invalid.
+# From scripts/detect_item_overhauls.py; 16.1 (season start) confirmed by user 2026-10-06.
+# Kit (stable) tips have no date cutoff (user, 2026-10-07): the kit-change rules decide. Sources from before the
+# durability update (13.10) describe different trades and kill thresholds, so they count for less and show as older.
+older_source_before: "2023-05-17"   # patch 13.10 release
+older_source_weight: 0.75
+item_overhaul_patches: ["14.1", "15.1", "16.1"]
+roles: [top, mid]
+target_elo: platinum-diamond
+language: en
+
+http:
+  min_delay_s: 2          # global minimum gap between any two network requests
+  timeout_s: 30
+  user_agent: "garen-assistant/0.1 (personal research tool; low volume, cached)"
+
+# Claim weights by source_type (see CLAUDE.md "Sources").
+source_weights:
+  otp_guide: 1.0
+  otp_video: 1.0
+  onetricks_data: 0.9
+  stats: 0.7
+  reddit_garenmains: 0.5
+  reddit_other: 0.3
+  other_guide: 0.3
+
+sources:
+  data_dragon:
+    versions: https://ddragon.leagueoflegends.com/api/versions.json
+    champions: https://ddragon.leagueoflegends.com/cdn/{patch}/data/en_US/champion.json
+    items: https://ddragon.leagueoflegends.com/cdn/{patch}/data/en_US/item.json
+    runes: https://ddragon.leagueoflegends.com/cdn/{patch}/data/en_US/runesReforged.json
+  lol_wiki:
+    api: https://wiki.leagueoflegends.com/en-us/api.php
+    patch_history_page: "{champion}/Patch_history"
+  onetricks:
+    matchup: https://www.onetricks.gg/champions/builds/{champion}?matchup={enemy}&role={role}
+    ranking: https://www.onetricks.gg/champions/ranking/{champion}
+    streamers: https://www.onetricks.gg/champions/streamers/{champion}
+  otp_creators:
+    - name: AddictedToBacon
+      youtube_handle: "@addictedtobaconlol"
+      twitch: addictedtobacon
+      mobafire_guide: https://www.mobafire.com/league-of-legends/build/addictedtobacon-challenger-garen-guide-16-2-648507
+  # YouTube channels used as sources: elo + source_type. Elo is what the channel itself claims.
+  video_authors:
+    AddictedToBacon: {elo: challenger, type: otp_video}
+    Erislash: {elo: challenger, type: otp_video}          # "rank 1 Garen EU"
+    Federals1: {elo: challenger, type: otp_video}         # also MOBAFire guide author
+    LoLTriton: {elo: master, type: otp_video}
+    riste: {elo: challenger, type: otp_video}
+    RamyAura: {elo: unknown, type: other_guide}           # Garen content, elo not verified
+    WayOfTheTempest: {elo: challenger, type: other_guide}  # Yone OTP, enemy perspective
+    Geishuu: {elo: grandmaster, type: other_guide}        # Sett player, enemy perspective
+    Palco: {elo: challenger, type: otp_video}             # Challenger Garen (NA)
+    Drututt: {elo: challenger, type: other_guide}         # Camille OTP, enemy perspective
+    Godrekton: {elo: challenger, type: other_guide}       # Renekton OTP, enemy perspective
+    Vapora: {elo: unknown, type: other_guide}            # Garen mid gameplay commentary (Season 16), rank not stated
+    Zyrenn: {elo: unknown, type: other_guide}            # Garen "How to beat X" videos, rank not stated
+    XNaiiY: {elo: challenger, type: otp_video}           # "Rank 1 Garen NA"
+    KilllaaG: {elo: unknown, type: other_guide}          # Gwen player, enemy perspective
+    Kionian: {elo: unknown, type: other_guide}           # Irelia player, enemy perspective
+    mechanic kid: {elo: unknown, type: other_guide}      # Irelia player, enemy perspective
+    Kunain: {elo: unknown, type: other_guide}            # Akali player, enemy perspective
+    Aatreus: {elo: unknown, type: other_guide}           # K'Sante player, enemy perspective
+    Bwipo VODs: {elo: challenger, type: other_guide}     # pro player (Gragas), enemy perspective
+    Feedaboi: {elo: challenger, type: other_guide}       # Kled player, enemy perspective
+    Bonkk (MOBAFire): {elo: unknown, type: other_guide}  # in-depth MOBAFire guide (rating pending), per-matchup notes
+  # Aliases for finding enemies in auto-generated transcripts (mis-transcriptions included).
+  champion_aliases:
+    Teemo: [teemo, timo, temo]
+    Kled: [kled, cled, clad, klad]
+    Akshan: [akshan, akshon, ak shan, akshaan]
+    Darius: [darius, darrius, dairus]
+    Nasus: [nasus, nasis, naus, nasa]
+    Jax: [jax, jacks, jack's, jacks']
+    Yone: [yone, yoni, yonne, yo-ne]
+    Sett: [sett]
+    Mordekaiser: [mordekaiser, morde, mord, morte]
+    Malphite: [malphite, malph, malf]
+    Camille: [camille, camil, cami, kamil]
+    Aatrox: [aatrox, atrox, a-trox]
+    Renekton: [renekton, renek, renec, croc]
+    Volibear: [volibear, voli, volly, vuler, vulibear, volabear]
+    Gangplank: [gangplank, gang plank, gp, gankplank]
+    Tryndamere: [tryndamere, trynd, trynda, tryn, trinda, trindamere, trynamere, trin]
+    KSante: [ksante, k'sante, k sante, sante, canta, kante, kant, ksanti]
+    Shen: [shen]
+    Fiora: [fiora, fiorra, fiore]
+    Kayle: [kayle, kale, kail, kail's]
+    Chogath: [chogath, cho'gath, cho gath, cho, shoga, shogath, chog]
+    Irelia: [irelia, ireia, irelia's, aelia]
+    Gnar: [gnar, nar, gnarr]
+    Ornn: [ornn, orn, or n]
+    Jayce: [jayce, jace, jays, jay's]
+    Yasuo: [yasuo, yasu, yas, yaso]
+    Illaoi: [illaoi, ilai, illoy, ill-oy, ilaoi, iloy]
+    Riven: [riven, rivan, raven]
+    DrMundo: [mundo, dr. mundo, doctor mundo, mondo]
+    Ambessa: [ambessa, ambesa, invesa, ambassa, ambasses]
+    Yorick: [yorick, yorik, york, yoric, yorick's]
+    Zaahen: [zaahen, zahen, zaheen, zayen]
+    Urgot: [urgot, urgo, ergot]
+    Pantheon: [pantheon, panth, pantheon's, panthe]
+    Gragas: [gragas, grag, gragus, gragis]
+    Singed: [singed, singe, singed's]
+    Sion: [sion, sion's, zion, sian]
+    Akali: [akali, akali's, akaly, a kali]
+    Gwen: [gwen, gwen's, gwyn, guen]
+    Olaf: [olaf, olaf's, olaff]
+    TahmKench: [tahm kench, tahm, kench, tom kench, tam kench, tahm's]
+    Vayne: [vayne, vain, vane, vayne's]
+    Trundle: [trundle, trundle's, trundel]
+    Kennen: [kennen, kenen, kennen's, canon]
+    Warwick: [warwick, ww, war wick, warwick's, wari]
+    Quinn: [quinn, quin, quinn's, valor]
+    Katarina: [katarina, kat, katarina's, katerina]
+    Zed: [zed, zed's, zedd]
+    Fizz: [fizz, fiz, fizz's]
+    Viktor: [viktor, victor, viktor's]
+    Sylas: [sylas, silas, sylas's]
+    Ahri: [ahri, ari, ahri's, ahry]
+    Locke: [locke, locke's]
+    Syndra: [syndra, sindra, syndra's, synra]
+    Malzahar: [malzahar, malz, malzahar's, malzhar]
+    Galio: [galio, galio's, gallio]
+    Ekko: [ekko, eko, ekko's]
+    Leblanc: [leblanc, le blanc, lb, leblanc's]
+    Lissandra: [lissandra, lisandra, liss]
+    Veigar: [veigar, vegar, veigar's]
+    Vladimir: [vladimir, vlad, vladimir's]
+    Xerath: [xerath, xerath's, zerath]
+    Kassadin: [kassadin, kasadin, kass]
+    TwistedFate: [twisted fate]
+    Diana: [diana, diana's]
+    Lux: [lux, lux's]
+    Anivia: [anivia, anivvia, anivia's]
+    Orianna: [orianna, oriana, ori]
+    Cassiopeia: [cassiopeia, cassio, cass]
+  mobafire_guides:   # captured via built-in browser; see STATE.md
+    - {author: Federals1, elo: challenger, url: "https://www.mobafire.com/league-of-legends/build/26-17-challenger-garen-top-guide-642197"}
+    - {author: jpaul2077, elo: master, url: "https://www.mobafire.com/league-of-legends/build/paul-chungs-master-garen-guide-583854"}
+  reddit:
+    enabled: false   # off until Reddit approves API access (Responsible Builder Policy); then scripts/fetch_reddit.py, read-only
+    primary: Garenmains
+    secondary: [summonerschool, leagueoflegends]
+  stats:
+    ugg_matchups: https://u.gg/lol/champions/{champion_lower}/matchups?role={role}&rank={rank}
+    lolalytics_build: https://lolalytics.com/lol/{champion_lower}/build/?lane={role}&tier={tier}

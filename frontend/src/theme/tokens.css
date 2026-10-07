@@ -1,0 +1,31 @@
+/* Theme-independent tokens: type scale, shape, motion. Colours live in themes/<name>.css. */
+:root {
+  /* Type */
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-body: "Figtree Variable", "Segoe UI", system-ui, sans-serif;
+  --text-xs: 0.8125rem;   /* 13px */
+  --text-sm: 0.9375rem;   /* 15px */
+  --text-base: 1.0625rem; /* 17px */
+  --text-lg: 1.25rem;
+  --text-xl: 1.625rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(4.5rem, 9vw, 9.5rem);
+  --leading-body: 1.6;
+  --measure: 70ch;
+
+  /* Shape */
+  --radius-panel: 14px;
+  --radius-icon: 12px;
+  --radius-pill: 999px;
+  --blur-glass: 18px;
+
+  /* Motion: one vocabulary shared by CSS, Motion and GSAP (mirrored in motion.ts) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-instant: 120ms;
+  --t-quick: 220ms;
+  --t-base: 420ms;
+  --t-slow: 700ms;
+  --t-intro: 1400ms;
+  --t-ambient: 24s;
+}

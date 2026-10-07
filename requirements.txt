@@ -1,0 +1,9 @@
+requests
+beautifulsoup4
+lxml
+pyyaml
+python-dotenv
+playwright
+youtube-transcript-api
+yt-dlp
+Pillow

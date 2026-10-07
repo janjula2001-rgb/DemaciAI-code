@@ -1,0 +1,28 @@
+/* Demacia: Garen's theme. Another main champion gets its own file with the same variable names,
+   selected by config.yaml -> ui_theme (exported to data/index.json). */
+[data-theme="demacia"] {
+  --night: #060a13;        /* page base: deep navy, never neutral black */
+  --rampart: #0e1729;      /* glass panel tint */
+  --glass: rgb(14 23 41 / 0.62);
+  --glass-strong: rgb(14 23 41 / 0.82);
+  --gold: #c9a55c;         /* Demacian gold: borders, keystone, active */
+  --gold-light: #ead7a6;   /* headings, key text */
+  --gold-line: rgb(201 165 92 / 0.35);
+  --steel: #aeb8c7;        /* body text */
+  --steel-dim: #7c889b;    /* secondary text */
+  --frost: #79b8ff;        /* cold glow, focus, "current" */
+  --blood: #d24b43;        /* hard */
+  --amber: #e8913a;        /* possibly outdated */
+
+  --glow-gold: 0 0 24px rgb(201 165 92 / 0.45);
+  --glow-frost: 0 0 28px rgb(121 184 255 / 0.35);
+
+  /* difficulty ring: 1-2 easy, 3 medium, 4-5 hard */
+  --diff-easy: var(--frost);
+  --diff-medium: var(--gold);
+  --diff-hard: var(--blood);
+  /* freshness dot */
+  --fresh-green: #5fd39a;
+  --fresh-amber: #e8c13a;
+  --fresh-orange: var(--amber);
+}
